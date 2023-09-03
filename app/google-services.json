@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "928221858808",
+    "project_id": "fotografpaylasmafirebase-2d89a",
+    "storage_bucket": "fotografpaylasmafirebase-2d89a.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:928221858808:android:cefb9ad0a0bac9f617e40d",
+        "android_client_info": {
+          "package_name": "com.berktavli.fotografpaylasmafirebase"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "928221858808-kcg4stt0qdoer51hdnh1luhfjppd55kt.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB_6SN7nZo3vRKZZS_Ym-0nxgmsR4jV8P4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "928221858808-kcg4stt0qdoer51hdnh1luhfjppd55kt.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
