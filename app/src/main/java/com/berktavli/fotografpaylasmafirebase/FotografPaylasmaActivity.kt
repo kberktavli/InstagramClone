@@ -23,8 +23,13 @@ import androidx.core.content.ContextCompat
 import androidx.core.content.PackageManagerCompat
 import com.berktavli.fotografpaylasmafirebase.databinding.ActivityFotografPaylasmaBinding
 import com.google.android.material.snackbar.Snackbar
+import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.FirebaseFirestore
+import com.google.firebase.storage.FirebaseStorage
 import com.vmadalin.easypermissions.EasyPermissions
 import java.lang.Exception
+import java.sql.Timestamp
+import java.util.UUID
 
 class FotografPaylasmaActivity : AppCompatActivity() {
 
@@ -33,8 +38,12 @@ class FotografPaylasmaActivity : AppCompatActivity() {
     private lateinit var binding: ActivityFotografPaylasmaBinding
     private lateinit var activityResultLauncher: ActivityResultLauncher<Intent>
     private lateinit var permissionLauncher: ActivityResultLauncher<String>
-//    var selectedPicture : Uri? = null
+    var imageData : Uri? = null
     var selectedBitmap : Bitmap? = null
+
+    private lateinit var storage : FirebaseStorage
+    private lateinit var auth : FirebaseAuth
+    private lateinit var database : FirebaseFirestore
 
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -42,14 +51,57 @@ class FotografPaylasmaActivity : AppCompatActivity() {
         binding = ActivityFotografPaylasmaBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
-
         registerLauncher()
 
-
+        storage = FirebaseStorage.getInstance() // Firebase.storage
+        auth = FirebaseAuth.getInstance()//Firebase.auth
+        database = FirebaseFirestore.getInstance()//Firebase.firestore
 
     }
 
     fun upload(view : View){
+        //depo işlemleri
+        //UUID -> universal unique id
+        val uuid = UUID.randomUUID()
+        val gorselIsmi = "${uuid}.jpg"
+        println("yüklendi3")
+        val reference = storage.reference
+
+        val gorselReference = reference.child("images").child(gorselIsmi)
+
+        if (imageData != null){
+            println("yüklendi1")
+            gorselReference.putFile(imageData!!).addOnSuccessListener{
+                 val yuklenenGorselReference = FirebaseStorage.getInstance().reference.child("images").child(gorselIsmi)
+                yuklenenGorselReference.downloadUrl.addOnSuccessListener {uri->
+                    val downloadUrl = uri.toString()
+                    val guncelKullaniciEmaili = auth.currentUser!!.email.toString()
+                    val kullaniciYorumu = binding.yorumText.text.toString()
+                    val tarih = com.google.firebase.Timestamp.now()
+                    //veritabanı işlemleri
+                    // hashmap olusturuyoruz
+
+                    val postHashMap = hashMapOf<String,Any>()
+                    postHashMap.put("gorselurl",downloadUrl)
+                    postHashMap.put("kullaniciemail",guncelKullaniciEmaili)
+                    postHashMap.put("kullaniciyorum",kullaniciYorumu)
+                    postHashMap.put("tarih",tarih)
+
+                    database.collection("Post").add(postHashMap).addOnCompleteListener { task->
+                        if (task.isSuccessful){
+                            finish()//fotografpaylasmaactivity kapatıp haberler ekranına geri dönücek
+                        }
+                    }.addOnFailureListener { exception->
+                        Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
+                    }
+
+                }
+            }.addOnFailureListener {exception->
+                println("Yükleme Sırasında hata olustu")//yüklenmeme hatası alırsan console'a gidip güvenlik kurallarından okuma yazmaya auth null degilse izin ver.
+                Toast.makeText(applicationContext,exception.localizedMessage,Toast.LENGTH_LONG).show()
+
+            }
+        }
 
     }
 
@@ -112,11 +164,11 @@ class FotografPaylasmaActivity : AppCompatActivity() {
             if (result.resultCode == RESULT_OK) {
                 val intentFromResult = result.data
                 if (intentFromResult != null){
-                    val imageData = intentFromResult.data
+                     imageData = intentFromResult.data
                     if (imageData != null){
                         try {
                             if (Build.VERSION.SDK_INT >= 28){
-                                val source = ImageDecoder.createSource(this@FotografPaylasmaActivity.contentResolver,imageData)
+                                val source = ImageDecoder.createSource(this@FotografPaylasmaActivity.contentResolver,imageData!!)
                                 selectedBitmap = ImageDecoder.decodeBitmap(source)
                                 binding.imageView.setImageBitmap(selectedBitmap)
                             }else{
