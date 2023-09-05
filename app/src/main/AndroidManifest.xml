@@ -16,13 +16,13 @@
         android:theme="@style/Theme.FotografPaylasmaFirebase"
         tools:targetApi="31">
         <activity
-            android:name=".FotografPaylasmaActivity"
+            android:name=".view.FotografPaylasmaActivity"
             android:exported="false" />
         <activity
-            android:name=".HaberlerActivity"
+            android:name=".view.HaberlerActivity"
             android:exported="false" />
         <activity
-            android:name=".KullaniciActivity"
+            android:name=".view.KullaniciActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

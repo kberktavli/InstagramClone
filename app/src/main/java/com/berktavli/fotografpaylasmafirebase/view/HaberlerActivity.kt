@@ -1,12 +1,11 @@
-package com.berktavli.fotografpaylasmafirebase
+package com.berktavli.fotografpaylasmafirebase.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import android.view.View
 import android.widget.Toast
+import com.berktavli.fotografpaylasmafirebase.model.Post
 import com.berktavli.fotografpaylasmafirebase.databinding.ActivityHaberlerBinding
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
@@ -58,7 +57,7 @@ class HaberlerActivity : AppCompatActivity() {
 
 
     fun addPhoto(view : View) {
-        val intent = Intent(this@HaberlerActivity,FotografPaylasmaActivity::class.java)
+        val intent = Intent(this@HaberlerActivity, FotografPaylasmaActivity::class.java)
         startActivity(intent)
     }
 

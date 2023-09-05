@@ -1,4 +1,4 @@
-package com.berktavli.fotografpaylasmafirebase
+package com.berktavli.fotografpaylasmafirebase.view
 
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
@@ -26,7 +26,7 @@ class KullaniciActivity : AppCompatActivity() {
          */
         val guncelKullanici = auth.currentUser
         if (guncelKullanici != null){
-            val intent = Intent(this@KullaniciActivity,HaberlerActivity::class.java)
+            val intent = Intent(this@KullaniciActivity, HaberlerActivity::class.java)
             startActivity(intent)
             finish()
         }
@@ -38,7 +38,7 @@ class KullaniciActivity : AppCompatActivity() {
             if (task.isSuccessful){
                 val guncelKullanici = auth.currentUser?.email.toString()
                 Toast.makeText(this@KullaniciActivity,"Hosgeldin: ${guncelKullanici}",Toast.LENGTH_LONG).show()
-                val intent = Intent(this@KullaniciActivity,HaberlerActivity::class.java)
+                val intent = Intent(this@KullaniciActivity, HaberlerActivity::class.java)
                 startActivity(intent)
                 finish()
             }
@@ -57,7 +57,7 @@ class KullaniciActivity : AppCompatActivity() {
             //asenkron
             if (task.isSuccessful){
                 //diger aktiviteye gidelim
-                val intent = Intent(this@KullaniciActivity,HaberlerActivity::class.java)
+                val intent = Intent(this@KullaniciActivity, HaberlerActivity::class.java)
                 startActivity(intent)
                 finish()
             }

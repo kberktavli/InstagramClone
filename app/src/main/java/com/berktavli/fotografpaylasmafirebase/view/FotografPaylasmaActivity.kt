@@ -1,12 +1,10 @@
-package com.berktavli.fotografpaylasmafirebase
+package com.berktavli.fotografpaylasmafirebase.view
 
 import android.Manifest
-import android.app.Activity
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.ImageDecoder
-import android.media.Image
 import android.net.Uri
 import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
@@ -15,20 +13,15 @@ import android.provider.MediaStore
 import android.view.View
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContract
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.app.ActivityCompat
-import androidx.core.content.ContentProviderCompat.requireContext
 import androidx.core.content.ContextCompat
-import androidx.core.content.PackageManagerCompat
 import com.berktavli.fotografpaylasmafirebase.databinding.ActivityFotografPaylasmaBinding
 import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 import com.google.firebase.storage.FirebaseStorage
-import com.vmadalin.easypermissions.EasyPermissions
 import java.lang.Exception
-import java.sql.Timestamp
 import java.util.UUID
 
 class FotografPaylasmaActivity : AppCompatActivity() {
